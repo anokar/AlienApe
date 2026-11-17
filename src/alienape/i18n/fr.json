@@ -88,6 +88,8 @@
   "PROJECT_FILE_VERIFICATION": "vérification",
   "PROJECT_INTERRUPTED": "L’exécution du projet a été interrompue. Les fichiers déjà créés peuvent subsister ; vérifiez le dossier.",
   "UI_PROJECT_NONE": "Aucun projet ouvert",
+  "UI_WELCOME_DEMO": "Projet prêt : {path}\nVous êtes en mode démo (sans IA). Essayez « lister les fichiers ». Pour obtenir de vraies réponses, ouvrez « Modèles » ci-dessus et connectez Ollama ou LM Studio.",
+  "UI_WELCOME_READY": "Projet prêt : {path}\nDécrivez votre tâche ci-dessous. Les modifications de fichiers suivent les autorisations du projet.",
   "UI_MODEL_ACCESS": "Modèle actif",
   "UI_PROJECT_ACCESS": "Dossier du projet actuel",
   "UI_FILES_ACCESS": "Fichiers du projet",

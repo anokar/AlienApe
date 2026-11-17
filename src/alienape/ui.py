@@ -383,7 +383,8 @@ class MainWindow(QMainWindow):
         self.permissions = PermissionManager(self.settings.permissions)
         self.recent.clear()
         self.chat.clear()
-        self.append_chat("AlienApe", f"Projekt bereit: {workspace.root}\nAufgabe eingeben oder eine Projektdatei auswählen.")
+        welcome_key = "UI_WELCOME_DEMO" if not self.settings.models and self.settings.model.provider == "mock" else "UI_WELCOME_READY"
+        self.append_chat("AlienApe", localize(welcome_key, self.settings.ui.language, path=workspace.root))
         self.refresh_files()
         self.refresh_memory()
         try:

@@ -88,6 +88,8 @@
   "PROJECT_FILE_VERIFICATION": "verification",
   "PROJECT_INTERRUPTED": "Project execution was interrupted. Files already created may remain; inspect the project folder.",
   "UI_PROJECT_NONE": "No project open",
+  "UI_WELCOME_DEMO": "Project ready: {path}\nYou are in demo mode (no AI). Try “list files” to explore. For real model responses, open “Models” above and connect Ollama or LM Studio.",
+  "UI_WELCOME_READY": "Project ready: {path}\nDescribe your task below. File changes follow the project permission settings.",
   "UI_MODEL_ACCESS": "Active model",
   "UI_PROJECT_ACCESS": "Current project folder",
   "UI_FILES_ACCESS": "Project files",

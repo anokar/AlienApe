@@ -88,6 +88,8 @@
   "PROJECT_FILE_VERIFICATION": "Prüfung",
   "PROJECT_INTERRUPTED": "Die Projektausführung wurde unterbrochen. Bereits erstellte Dateien können bestehen bleiben; bitte den Projektordner prüfen.",
   "UI_PROJECT_NONE": "Kein Projekt geöffnet",
+  "UI_WELCOME_DEMO": "Projekt bereit: {path}\nDu bist im Demo-Modus (keine KI). Zum Ausprobieren: „Dateien auflisten“. Für echte Modellantworten öffne oben „Modelle“ und verbinde Ollama oder LM Studio.",
+  "UI_WELCOME_READY": "Projekt bereit: {path}\nBeschreibe unten deine Aufgabe. Dateiänderungen werden nach den Projekteinstellungen freigegeben.",
   "UI_MODEL_ACCESS": "Aktives Modell",
   "UI_PROJECT_ACCESS": "Aktueller Projektordner",
   "UI_FILES_ACCESS": "Projektdateien",
