@@ -1,2 +1,2 @@
-"""Source manifest identifier (excludes this self-referential file)."""
-BUILD_ID="sha256:100bea8f75010f79e6a0f3867b45e3674fa3e9a8e4f1bb6597a12240bae408b5"
+"""Git-normalized source manifest ID; excludes this file and local work/ artifacts."""
+BUILD_ID = "sha256:bd842dad3557ef7d990f48144b137518667ae60c40d1bb38de93b27ac58673dc"

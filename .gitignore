@@ -5,6 +5,7 @@ __pycache__/
 venv/
 build/
 dist/
+release/
 *.exe
 *.spec.tmp
 data/
@@ -53,3 +54,6 @@ SHAREABILITY_V*.json
 
 BUILD_SMOKE_V*.json
 BUILD_AUDIT_V*.json
+
+# Local research and test artifacts
+work/

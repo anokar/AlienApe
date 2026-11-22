@@ -425,7 +425,8 @@ class Agent:
                 answer='Die Modellaussage über globale Dateifähigkeiten war unzutreffend.\n\n'+capability_answer(self)
         if self.resources.counters.model_calls>getattr(self,'turn_model_calls_before',0) and self.resources.counters.memory_writes<=getattr(self,'turn_memory_writes_before',0) and (re.search(r'(?i)\b(?:memory|merke|merk|erinner|remember|gedächtnis)\w*',task+' '+answer) or re.search(r'(?i)\b(?:ich merke mir|habe mir gemerkt)\b',answer)) and re.search(r'(?i)\b(?:gespeichert|gemerkt|notiert|remembered|saved|ich merke mir|habe mir gemerkt)\b',answer):
             answer='Für diese Anfrage wurde keine dauerhafte Memory-Speicherung bestätigt.'
-        if any(p.casefold().endswith(('.c','.cpp','.cc','.cxx')) for p in self.written_paths):
+        from .languages import SOURCE_SUFFIXES
+        if any(any(p.casefold().endswith(suffix) for suffix in SOURCE_SUFFIXES) and not p.casefold().endswith(('.py','.gd')) for p in self.written_paths):
             from .i18n import localize
             answer+='\n\n'+localize('VERIFICATION_CPP_NOT_RUN',self.settings.ui.language)
         if self.workspace_discovery and not self.response_contract.expects_json:
@@ -635,7 +636,14 @@ class Agent:
                 return cached
         result = self.resources.cached_read(path) if name == "read_file" else None
         if result is None:
-            result = self.diagnostic_trace.dispatch(self.tools.execute,name,arguments) if self.diagnostic_trace else self.tools.execute(name, arguments)
+            try:
+                result = self.diagnostic_trace.dispatch(self.tools.execute,name,arguments) if self.diagnostic_trace else self.tools.execute(name, arguments)
+            except OSError as exc:
+                if name=='write_file':
+                    self.last_failure_type=FailureType.TOOL_FAILURE
+                    self.dependency_failure=FailureType.TOOL_FAILURE
+                    self.emit('FAILURE_CLASSIFIED',{'failure_type':'TOOL_FAILURE','subreason':'WRITE_IO_FAILURE','status':str(exc)[:300]})
+                raise
             if name=='write_file':
                 after=path.read_bytes();self.emit('PROPOSAL_WRITTEN_HASH',{'path':arguments['path'],'written_bytes_sha256':hashlib.sha256(after).hexdigest()});diff=''.join(difflib.unified_diff(before.decode('utf-8',errors='replace').splitlines(keepends=True),after.decode('utf-8',errors='replace').splitlines(keepends=True),fromfile='before/'+arguments['path'],tofile='after/'+arguments['path']))
                 if before_hash!=hashlib.sha256(after).hexdigest():self.changed_paths.append(arguments['path'])
