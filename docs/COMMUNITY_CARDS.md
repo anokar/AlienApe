@@ -1,6 +1,6 @@
-# Community Cards — experimental WIP
+# Community Cards
 
-Community Cards are an offline way to share one observation from local AlienApe Experience. They are not model benchmarks, global rankings, automatic qualifications, or executable instructions. This guide describes the 0.7.3b1 beta candidate; it has not been publicly released.
+Community Cards are an offline way to share one observation from local AlienApe Experience. They are not model benchmarks, global rankings, automatic qualifications, or executable instructions. Imported cards remain unverified and do not affect routing.
 
 ## Workflow
 
@@ -44,7 +44,7 @@ SHA-256 detects content changes relative to the supplied hash; anyone can create
 - Cards are unverified observations, not benchmark evidence or an independent reproduction.
 - There is no aggregation, ranking, automatic qualification, synchronization, or publisher authentication.
 - Privacy screening is heuristic; user review remains necessary. Unicode display controls are made visible, but visually similar Unicode characters may still resemble one another.
-- Cards use the current package metadata for `application_version` (`0.7.3b1` in this beta candidate).
+- Cards record the current package metadata as `application_version`.
 - The workflow has been smoke-tested with synthetic data in two isolated installations. That test does not establish real-world provenance or publisher authenticity.
 
 For the controller's boundaries, see [Architecture](ARCHITECTURE.md), [Security](../SECURITY.md), and [Known limitations](../KNOWN_LIMITATIONS.md).

@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.7.3b1 — beta candidate (not published)
+## 1.0.0 — first public release
+
+- Set the public application and package version to 1.0.0.
+- Package the Windows desktop app as a portable ZIP; no Python installation is needed to run it.
+- Document local model routing, benchmarking, Community Model Cards, permission-gated file operations, and current limitations.
+
+## 0.7.3b1 — development history
 
 - Add offline Community Cards for one-observation export and import, with a reviewable privacy preview, strict validation, separate `UNVERIFIED` Community Evidence storage, duplicate detection, and no routing effect.
 - Harden display of imported untrusted card text.
@@ -10,8 +16,8 @@
 - Recognize common programming-language source files consistently in routing, generation requests, workspace discovery, and source-scope resolution. Keep automatic verification limited to the existing Python and Godot checks.
 - Localize the main workspace, core memory/activity labels, settings, permissions, and Community Cards in DE/EN/FR; require restart after a UI-language change to avoid mixed-language windows.
 - Remove the unused Semantic Resolver multilingual toggle while preserving its saved value for configuration compatibility.
-- Mark package metadata as the 0.7.3 beta pre-release. Project Builder, model qualification, and remaining advanced-screen localization stay experimental; see Known Limitations and the Community Cards guide.
-- Run the complete regression suite for this beta candidate: 1,118 passed, 0 failed, 5 skipped.
+- At that point, Project Builder, model qualification, and remaining advanced-screen localization were still experimental; see Known Limitations and the Community Cards guide.
+- The recorded regression suite at that point reported 1,118 passed, 0 failed, 5 skipped.
 
 
 ## 0.7.1

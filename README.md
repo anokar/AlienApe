@@ -1,117 +1,91 @@
-# AlienApe
+<p align="center"><img src="assets/splash.png" alt="AlienApe Mascot" width="180"></p>
+
+# AlienApe 1.0.0
+
+**A permission-based, local AI controller for Windows.** AlienApe routes work across local models for Coding, Reasoning, and General tasks, with a JSON fallback. It can benchmark local models, exchange offline community model cards, and request permission before file operations. It does not delete files or run arbitrary shell commands.
+
+The AlienApe controller runs on your PC. For a fully local setup, connect it to a local model server such as Ollama or LM Studio. No model or cloud account is included or required. Project content is sent to the model endpoint you configure.
 
 [Deutsch](#deutsch) · [English](#english)
 
 ## Deutsch
 
-AlienApe ist ein lokaler KI-Assistent für Windows. Er liest Projektdateien, gibt Aufgaben an ein lokal betriebenes Modell und kann Dateiänderungen nach den Projekteinstellungen freigeben. Er löscht keine Dateien und führt keine beliebigen Shell-Befehle aus.
+AlienApe ist eine lokale, berechtigungsbasierte KI-Steuerung für den Windows-Desktop. Die Anwendung leitet Aufgaben an lokale Modelle für **Coding**, **Reasoning** und **General** weiter und kann bei Bedarf auf JSON-Ausgabe zurückfallen. Sie kann lokale Modelle benchmarken, Community Model Cards offline austauschen und fragt vor Dateioperationen nach Berechtigung. **AlienApe löscht keine Dateien und führt keine beliebigen Shell-Befehle aus.**
 
-**Projektstatus:** Quellcode-Kandidat `0.7.3b1`, noch keine öffentliche oder stabile Veröffentlichung. Der normale Chat-Ablauf ist nutzbar; Project Builder, Modellqualifizierung und Community Cards sind optionale Experimente.
+### Windows-App herunterladen und starten
 
-### Schnellstart
+1. Öffne die [GitHub-Releases](https://github.com/anokar/AlienApe-v0.7/releases) und lade `AlienApe-v1.0.0-Windows.zip` herunter.
+2. Entpacke das vollständige ZIP in einen Ordner, in den dein Windows-Konto schreiben darf.
+3. Starte `AlienApe.exe` aus dem entpackten Ordner `AlienApe`. Python ist dafür nicht erforderlich.
 
-Voraussetzung: Windows und Python 3.12 oder neuer.
+AlienApe startet mit einem Demo-Projekt, das keine KI benötigt. Für echte Modellantworten installierst und startest du selbst Ollama oder LM Studio, installierst dort ein lokales Modell und verbindest es in AlienApe über **Modelle**. Das Modell ist nicht im ZIP enthalten.
+
+### Was AlienApe bietet
+
+- **Lokales Multi-Modell-Routing:** ordnet Coding-, Reasoning- und General-Aufgaben verfügbaren Modellen zu; strukturierte Aufgaben können den JSON-Fallback nutzen.
+- **Lokales Modell-Benchmarking:** du kannst Benchmark-Aufgaben gezielt auf deinem Rechner starten und Modelle anhand beobachteter Ergebnisse vergleichen. Benchmarks laufen nicht automatisch im Hintergrund.
+- **Community Model Cards:** tauschen einzelne Beobachtungen offline als JSON aus. Importierte Karten sind unbestätigt und beeinflussen kein Routing.
+- **Berechtigungsbasierte Dateioperationen:** arbeitet im geöffneten Projektordner und fragt für freigabepflichtige Schreibvorgänge nach. Es gibt kein Datei-Löschwerkzeug und keine beliebige Shell-Ausführung.
+- **Lokale Datenhaltung:** Einstellungen, Memory, Modellerfahrung und Diagnosen werden lokal gespeichert. Diagnosetracing ist standardmäßig deaktiviert.
+
+### Datenschutz und Grenzen
+
+Der Controller läuft lokal. Wenn du einen lokalen Modellserver verwendest, bleiben Projektinhalte und Anfragen auf deinem Gerät. AlienApe sendet sie an den konfigurierten Modell-Endpunkt; bei einer selbst eingetragenen Netzwerk- oder Cloud-Adresse gelten die Datenschutzregeln dieses Anbieters. Sichere wichtige Dateien vor der Arbeit mit einem KI-Modell.
+
+AlienApe ist keine vollständige Betriebssystem-Sandbox. Modellantworten können falsch sein. Automatische Codeprüfung ist auf Python und Godot begrenzt; ein erfolgreicher Schreibvorgang beweist keine Korrektheit. Weitere Details stehen in [bekannte Grenzen](KNOWN_LIMITATIONS.md) und [Sicherheit](SECURITY.md).
+
+### Aus Quellcode bauen
+
+Für Entwicklung und lokale Builds benötigst du Python 3.12 oder neuer:
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install -e .
-python -m alienape
+python -m pip install -e ".[test,build]"
+powershell -NoProfile -File scripts\build_windows.ps1 -RunTests
 ```
 
-Beim ersten Start öffnet sich ein Demo-Projekt. Die Demo verwendet keine KI und zeigt die Grundbedienung. Für echte Modellantworten:
+Die ausführbare Datei wird unter `dist/AlienApe/AlienApe.exe` erstellt. Weitere Hinweise stehen in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-1. Installiere und starte Ollama oder LM Studio selbst.
-2. Wähle in AlienApe oben **Modelle**, füge dein lokal installiertes Modell hinzu und prüfe die Verbindung.
-3. Öffne deinen Projektordner und beschreibe die Aufgabe im Chat.
-
-AlienApe lädt keine Modelle herunter. Dateiänderungen richten sich nach den Berechtigungen in den Einstellungen. Sichere wichtige Dateien vor dem Einsatz.
-
-### Was AlienApe macht
-
-- Liest und durchsucht Dateien im geöffneten Projektordner.
-- Erstellt oder ändert Dateien nach einer Freigabe.
-- Kann ausdrücklich gespeicherte Projektinformationen zwischen Sitzungen wiederverwenden.
-- Zeigt Aktivitäten und den Verifikationsstatus an. Automatische Codeprüfung ist auf Python und Godot begrenzt; ein erfolgreicher Schreibvorgang beweist keine Korrektheit.
-
-AlienApe ist keine vollständige Betriebssystem-Sandbox. Modellantworten können falsch sein. Andere Programmiersprachen werden nicht automatisch kompiliert oder ausgeführt.
-
-### Windows-App bauen
-
-Für einen lokalen App-Build installiere PyInstaller und baue das Onedir-Paket:
-
-```powershell
-python -m pip install -e ".[build]"
-powershell -NoProfile -File scripts\build_windows.ps1
-```
-
-Die App liegt danach unter `dist/AlienApe/AlienApe.exe`. Sie benötigt kein mitgeliefertes Modell. Der optionale Schalter `-RunTests` führt vorher die Testsuite mit isolierten Laufzeitdaten aus.
-
-### Optionale Bereiche
-
-Memory, Modellerfahrung, Routing und Community Cards sind in eigenen Reitern erreichbar. Community Cards tauschen einzelne Beobachtungen offline aus. Importierte Karten bleiben ungeprüft und beeinflussen keine Modellauswahl. Project Builder und Modellqualifizierung sind experimentell und für den normalen Chat nicht erforderlich.
-
-### Daten und Datenschutz
-
-Projektinhalte und Anfragen gehen an den konfigurierten Modellserver auf deinem Rechner. AlienApe richtet keinen Cloud-Anbieter ein. Konfiguration, Memory, Erfahrung und Diagnosen liegen im lokalen Anwendungsdatenordner; `ALIENAPE_DATA_DIR` kann diesen Ordner festlegen. Diagnosetracing ist standardmäßig aus.
-
-Mehr Details: [Sicherheit](SECURITY.md), [bekannte Grenzen](KNOWN_LIMITATIONS.md), [Architektur](docs/ARCHITECTURE.md), [Community Cards](docs/COMMUNITY_CARDS.md) und [Build-Hinweise](CONTRIBUTING.md).
-
-Quellcode: 0BSD, siehe [LICENSE](LICENSE). Das optionale Maskottchen ist separat als CC0 1.0 gekennzeichnet, siehe [ASSETS.md](ASSETS.md).
+Quellcode-Lizenz: 0BSD, siehe [LICENSE](LICENSE). Das optionale Maskottchen ist separat als CC0 1.0 gekennzeichnet, siehe [ASSETS.md](ASSETS.md).
 
 ## English
 
-AlienApe is a local AI assistant for Windows. It reads project files, sends tasks to a locally hosted model, and can make file changes according to project permissions. It does not delete files or run arbitrary shell commands.
+AlienApe is a local, permission-based AI controller for the Windows desktop. It routes tasks to local models for **Coding**, **Reasoning**, and **General** work, with a JSON fallback for structured tasks. It can benchmark local models, exchange community model cards offline, and asks permission before file operations. **AlienApe does not delete files or run arbitrary shell commands.**
 
-**Project status:** Source candidate `0.7.3b1`; no public or stable release has been made. The normal chat workflow is usable. Project Builder, model qualification, and Community Cards are optional experiments.
+### Download and run the Windows app
 
-### Quick start
+1. Open [GitHub Releases](https://github.com/anokar/AlienApe-v0.7/releases) and download `AlienApe-v1.0.0-Windows.zip`.
+2. Extract the complete ZIP to a folder your Windows account can write to.
+3. Run `AlienApe.exe` from the extracted `AlienApe` folder. Python is not required.
 
-Requirements: Windows and Python 3.12 or newer.
+AlienApe opens a demo project that does not need AI. For real model responses, install and start Ollama or LM Studio yourself, install a local model there, and connect it in AlienApe through **Models**. The model is not included in the ZIP.
+
+### What AlienApe provides
+
+- **Local multi-model routing:** sends Coding, Reasoning, and General tasks to available models; structured tasks can use the JSON fallback.
+- **Local model benchmarking:** start benchmark tasks on your computer when you want to compare local models using observed results. Benchmarks do not run automatically in the background.
+- **Community model cards:** exchange individual observations offline as JSON. Imported cards are unverified and do not affect routing.
+- **Permission-based file operations:** works in the open project folder and asks before permission-gated writes. There is no file deletion tool or arbitrary shell execution.
+- **Local data storage:** settings, Memory, model Experience, and diagnostics are stored locally. Diagnostic tracing is off by default.
+
+### Privacy and limitations
+
+The controller runs locally. With a local model server, project content and requests stay on your device. AlienApe sends them to the model endpoint you configure; if you enter a network or cloud endpoint, that provider's privacy rules apply. Back up important files before working with an AI model.
+
+AlienApe is not a full operating-system sandbox. Model responses can be wrong. Automatic code checks are limited to Python and Godot; a successful write does not prove correctness. See [known limitations](KNOWN_LIMITATIONS.md) and [security](SECURITY.md) for details.
+
+### Build from source
+
+For development and local builds, install Python 3.12 or newer:
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install -e .
-python -m alienape
+python -m pip install -e ".[test,build]"
+powershell -NoProfile -File scripts\build_windows.ps1 -RunTests
 ```
 
-The first launch opens a demo project. Demo mode does not use AI; it shows the basic workflow. For real model responses:
-
-1. Install and start Ollama or LM Studio yourself.
-2. In AlienApe, open **Models**, add a model you installed locally, and check the connection.
-3. Open your project folder and describe the task in chat.
-
-AlienApe does not download models. File changes follow the permissions in Settings. Back up important files before use.
-
-### What AlienApe does
-
-- Reads and searches files inside the open project folder.
-- Creates or changes files after permission is granted.
-- Can reuse project information that you explicitly saved between sessions.
-- Shows activity and verification status. Automatic code checks are limited to Python and Godot; a successful write does not prove correctness.
-
-AlienApe is not a full operating-system sandbox. Model responses can be wrong. Other programming languages are not automatically compiled or executed.
-
-### Build the Windows app
-
-For a local app build, install PyInstaller and create the onedir package:
-
-```powershell
-python -m pip install -e ".[build]"
-powershell -NoProfile -File scripts\build_windows.ps1
-```
-
-The app is written to `dist/AlienApe/AlienApe.exe`. It does not include a model. The optional `-RunTests` switch runs the test suite first with isolated runtime data.
-
-### Optional areas
-
-Memory, model experience, routing, and Community Cards are available in separate tabs. Community Cards exchange individual observations offline. Imported cards remain unverified and do not affect model selection. Project Builder and model qualification are experimental and are not needed for normal chat.
-
-### Data and privacy
-
-Project content and requests are sent to the model server configured on your computer. AlienApe does not set up a cloud provider. Configuration, Memory, Experience, and diagnostics are stored in the local application data folder; set `ALIENAPE_DATA_DIR` to choose another folder. Diagnostic tracing is off by default.
-
-More details: [Security](SECURITY.md), [known limitations](KNOWN_LIMITATIONS.md), [architecture](docs/ARCHITECTURE.md), [Community Cards](docs/COMMUNITY_CARDS.md), and [build notes](CONTRIBUTING.md).
+The executable is created at `dist/AlienApe/AlienApe.exe`. See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 Source code is licensed under 0BSD; see [LICENSE](LICENSE). The optional mascot is separately designated CC0 1.0; see [ASSETS.md](ASSETS.md).
